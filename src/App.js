@@ -1,5 +1,4 @@
 import React from "react";
-import './App.css';
 import { Routes, Route } from "react-router-dom";
 import GrandmastersList from "./components/GrandmastersList";
 import GrandmasterProfile from "./components/GrandmasterProfile";

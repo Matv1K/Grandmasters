@@ -8,10 +8,20 @@ const api = axios.create({
   },
 });
 
-export const fetchGrandmasters = async () => {
+export const fetchGrandmasters = async (offset = 0, limit = 20) => {
   try {
     const response = await api.get('/titled/GM');
-    return response.data.players || [];
+    const allPlayers = response.data.players || [];
+    
+    const startIndex = offset;
+    const endIndex = offset + limit;
+    const paginatedPlayers = allPlayers.slice(startIndex, endIndex);
+    
+    return {
+      players: paginatedPlayers,
+      hasMore: endIndex < allPlayers.length,
+      total: allPlayers.length
+    };
   } catch (error) {
     throw new Error('Failed to fetch grandmasters');
   }
