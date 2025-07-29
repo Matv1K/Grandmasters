@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { UI_CONFIG } from '../constants';
 
 export const useActivityTimer = (lastOnlineTimestamp) => {
   const [secondsSinceLastOnline, setSecondsSinceLastOnline] = useState(null);
@@ -10,32 +11,16 @@ export const useActivityTimer = (lastOnlineTimestamp) => {
     }
 
     const updateTimer = () => {
-      setSecondsSinceLastOnline(Math.floor(Date.now() / 1000) - lastOnlineTimestamp);
+      const currentTime = Math.floor(Date.now() / 1000);
+      setSecondsSinceLastOnline(currentTime - lastOnlineTimestamp);
     };
 
     updateTimer();
-    const interval = setInterval(updateTimer, 1000);
+    
+    const interval = setInterval(updateTimer, UI_CONFIG.ACTIVITY_TIMER_INTERVAL);
 
     return () => clearInterval(interval);
   }, [lastOnlineTimestamp]);
 
-  const formatDuration = (seconds) => {
-    if (seconds == null) return "-";
-    const d = Math.floor(seconds / (3600 * 24));
-    const h = Math.floor((seconds % (3600 * 24)) / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = seconds % 60;
-    
-    return [
-      d > 0 ? `${d}d` : null,
-      h > 0 ? `${h}h` : null,
-      m > 0 ? `${m}m` : null,
-      `${s}s`
-    ].filter(Boolean).join(" ");
-  };
-
-  return {
-    secondsSinceLastOnline,
-    formatDuration: () => formatDuration(secondsSinceLastOnline)
-  };
+  return { secondsSinceLastOnline, formatDuration: () => secondsSinceLastOnline };
 }; 

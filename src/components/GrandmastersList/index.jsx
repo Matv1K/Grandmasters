@@ -1,58 +1,73 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
-import { fetchGrandmasters } from "../../utils/api";
+import styles from "./style.module.css";
+import { useGrandmasters } from "../../hooks/useGrandmasters";
+import { UI_CONFIG } from "../../constants";
 
 function GrandmastersList() {
-  const [gms, setGms] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [hasMore, setHasMore] = useState(true);
-  const [offset, setOffset] = useState(0);
-  
   const navigate = useNavigate();
+  
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isError,
+    error
+  } = useGrandmasters(UI_CONFIG.INFINITE_SCROLL_LIMIT);
 
-  const loadMoreData = async () => {
-    if (loading || !hasMore) return;
-    
-    try {
-      setLoading(true);
-      const result = await fetchGrandmasters(offset, 20);
-      setGms(prevGms => [...prevGms, ...result.players]);
-      setHasMore(result.hasMore);
-      setOffset(prevOffset => prevOffset + 20);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+  const allGrandmasters = data?.pages.flatMap(page => page.players) || [];
+
+  const handleLoadMore = () => {
+    if (!isFetchingNextPage && hasNextPage) {
+      fetchNextPage();
     }
   };
 
-  useEffect(() => {
-    loadMoreData();
-  }, []);
+  const handleGrandmasterClick = (username) => {
+    navigate(`/gm/${username}`);
+  };
 
-  if (error) return <div className={styles.error}>Error: {error}</div>;
+  if (isError) {
+    return (
+      <div className={styles.error}>
+        Error: {error?.message || 'Failed to load grandmasters'}
+      </div>
+    );
+  }
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Chess Grandmasters</h1>
+      
       <InfiniteScroll
-        dataLength={gms.length}
-        next={loadMoreData}
-        hasMore={hasMore}
-        loader={<div className={styles.loading}>Loading more grandmasters...</div>}
+        dataLength={allGrandmasters.length}
+        next={handleLoadMore}
+        hasMore={hasNextPage}
+        loader={
+          <div className={styles.loading}>
+            {isFetchingNextPage ? "Loading more grandmasters..." : "Loading..."}
+          </div>
+        }
       >
         <ul className={styles.list}>
-          {gms.map((gm) => (
+          {allGrandmasters.map((username) => (
             <li
-              key={gm}
+              key={username}
               className={styles.item}
-              style={{ cursor: 'pointer', color: '#0074cc' }}
-              onClick={() => navigate(`/gm/${gm}`)}
+              onClick={() => handleGrandmasterClick(username)}
+              role="button"
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  handleGrandmasterClick(username);
+                }
+              }}
+              aria-label={`View profile for ${username}`}
             >
-              {gm}
+              {username}
             </li>
           ))}
         </ul>
