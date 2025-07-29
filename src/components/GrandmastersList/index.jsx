@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import styles from "./style.module.css";
+import { useNavigate } from "react-router-dom";
 
-function GrandmasterList() {
+function GrandmastersList() {
   const [gms, setGms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("https://api.chess.com/pub/titled/GM")
@@ -30,11 +33,18 @@ function GrandmasterList() {
       <h1 className={styles.title}>Chess Grandmasters</h1>
       <ul className={styles.list}>
         {gms.map((gm) => (
-          <li key={gm} className={styles.item}>{gm}</li>
+          <li
+            key={gm}
+            className={styles.item}
+            style={{ cursor: 'pointer', color: '#0074cc' }}
+            onClick={() => navigate(`/gm/${gm}`)}
+          >
+            {gm}
+          </li>
         ))}
       </ul>
     </div>
   );
 }
 
-export default GrandmasterList; 
+export default GrandmastersList; 
