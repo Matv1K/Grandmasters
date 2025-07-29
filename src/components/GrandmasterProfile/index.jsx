@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import styles from "./style.module.css";
 import { fetchPlayerProfile } from "../../utils/api";
 import { useActivityTimer } from "../../hooks/useActivityTimer";
+import Button from "../Button";
 
 function GrandmasterProfile() {
   const { username } = useParams();
@@ -37,9 +38,12 @@ function GrandmasterProfile() {
 
   return (
     <div className={styles.container}>
-      <button className={styles.backButton} onClick={() => navigate('/')}>
+      <Button 
+        onClick={() => navigate('/')}
+        className={styles.backButton}
+      >
         ← Back to Grandmasters
-      </button>
+      </Button>
       <h1 className={styles.title}>Grandmaster Profile</h1>
       <div className={styles.profileCard}>
         {player.avatar && (
@@ -47,36 +51,26 @@ function GrandmasterProfile() {
         )}
         <div className={styles.username}>{player.username}</div>
         <div className={styles.infoGrid}>
-          {player.name && (
-            <div className={styles.infoItem}>
-              <b>Name</b>
-              <p>{player.name}</p>
-            </div>
-          )}
-          {player.country && (
-            <div className={styles.infoItem}>
-              <b>Country</b>
-              <p>{player.country.split('/').pop().toUpperCase()}</p>
-            </div>
-          )}
-          {player.joined && (
-            <div className={styles.infoItem}>
-              <b>Joined</b>
-              <p>{new Date(player.joined * 1000).toLocaleDateString()}</p>
-            </div>
-          )}
-          {player.status && (
-            <div className={styles.infoItem}>
-              <b>Status</b>
-              <p>{player.status}</p>
-            </div>
-          )}
-          {player.last_online && (
-            <div className={styles.infoItem}>
-              <b>Last Activity</b>
-              <p>{formatDuration()} ago</p>
-            </div>
-          )}
+          <div className={styles.infoItem}>
+            <b>Name</b>
+            <p>{player.name}</p>
+          </div>
+          <div className={styles.infoItem}>
+            <b>Country</b>
+            <p>{player.country.split('/').pop().toUpperCase()}</p>
+          </div>
+          <div className={styles.infoItem}>
+            <b>Joined</b>
+            <p>{new Date(player.joined * 1000).toLocaleDateString()}</p>
+          </div>
+          <div className={styles.infoItem}>
+            <b>Status</b>
+            <p>{player.status}</p>
+          </div>
+          <div className={styles.infoItem}>
+            <b>Last Activity</b>
+            <p>{formatDuration()} ago</p>
+          </div>
         </div>
       </div>
     </div>
