@@ -13,4 +13,4 @@ export const useGrandmasters = (limit = UI_CONFIG.INFINITE_SCROLL_LIMIT) => {
     retry: 2,
     refetchOnWindowFocus: false,
   });
-}; 
+};

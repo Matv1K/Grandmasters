@@ -57,15 +57,6 @@ function GrandmastersList() {
               key={username}
               className={styles.item}
               onClick={() => handleGrandmasterClick(username)}
-              role="button"
-              tabIndex={0}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                  e.preventDefault();
-                  handleGrandmasterClick(username);
-                }
-              }}
-              aria-label={`View profile for ${username}`}
             >
               {username}
             </li>

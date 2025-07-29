@@ -51,4 +51,4 @@ export const useActivityTimer = (lastOnlineTimestamp) => {
   };
 
   return { secondsSinceLastOnline, formatDuration };
-}; 
+};

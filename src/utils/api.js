@@ -51,6 +51,7 @@ export const fetchPlayerProfile = async (username) => {
       if (error.response.status === 404) {
         throw new Error(`Player "${username}" not found`);
       }
+      
       throw new Error(`${ERROR_MESSAGES.FETCH_PLAYER_PROFILE}: ${error.response.status}`);
     } else if (error.request) {
       throw new Error(ERROR_MESSAGES.NETWORK_ERROR);
@@ -60,4 +61,4 @@ export const fetchPlayerProfile = async (username) => {
   }
 };
 
-export default api; 
+export default api;

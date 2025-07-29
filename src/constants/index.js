@@ -19,4 +19,4 @@ export const ERROR_MESSAGES = {
   FETCH_PLAYER_PROFILE: 'Failed to fetch player profile',
   NETWORK_ERROR: 'Network error occurred',
   UNKNOWN_ERROR: 'An unknown error occurred',
-}; 
+};
