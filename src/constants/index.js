@@ -6,7 +6,7 @@ export const API_CONFIG = {
 
 export const UI_CONFIG = {
   INFINITE_SCROLL_LIMIT: 20,
-  ACTIVITY_TIMER_INTERVAL: 1000, // 1 second
+  ACTIVITY_TIMER_INTERVAL: 1000,
 };
 
 export const ROUTES = {
