@@ -100,4 +100,4 @@ function GrandmasterProfile() {
   );
 }
 
-export default GrandmasterProfile; 
+export default GrandmasterProfile;

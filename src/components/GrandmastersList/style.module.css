@@ -17,26 +17,26 @@
   list-style: none;
   padding: 0;
   display: grid;
-  gap: var(--spacing-sm);
+  gap: var(--spacing);
 }
 
 .item {
   background: var(--bg-card);
   backdrop-filter: blur(20px);
-  border: 1px solid var(--border-primary);
+  border: 1px solid var(--border);
   border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
+  padding: var(--spacing-lg);
   font-size: 1.1rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all var(--transition-normal);
+  transition: all var(--transition);
   color: var(--text-primary);
 }
 
 .item:hover {
   background: var(--bg-hover);
   border-color: var(--border-hover);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow);
 }
 
 .loading {
@@ -46,7 +46,7 @@
   font-size: 1.1rem;
   font-weight: 500;
   background: rgba(59, 130, 246, 0.1);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   border: 1px solid rgba(59, 130, 246, 0.3);
 }
 
@@ -55,14 +55,14 @@
   color: var(--text-error);
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius);
   padding: var(--spacing-lg);
   font-weight: 500;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: var(--spacing-sm);
+    padding: var(--spacing);
   }
   
   .title {
@@ -71,7 +71,7 @@
   }
   
   .item {
-    padding: var(--spacing-sm);
+    padding: var(--spacing);
     font-size: 1rem;
   }
 }

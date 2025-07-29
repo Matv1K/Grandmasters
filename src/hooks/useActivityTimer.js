@@ -27,27 +27,12 @@ export const useActivityTimer = (lastOnlineTimestamp) => {
       return 'Unknown';
     }
 
-    const totalSeconds = secondsSinceLastOnline;
-    
-    const days = Math.floor(totalSeconds / (24 * 60 * 60));
-    const hours = Math.floor((totalSeconds % (24 * 60 * 60)) / (60 * 60));
-    const minutes = Math.floor((totalSeconds % (60 * 60)) / 60);
-    const seconds = totalSeconds % 60;
+    const d = Math.floor(secondsSinceLastOnline / 86400);
+    const h = Math.floor((secondsSinceLastOnline % 86400) / 3600);
+    const m = Math.floor((secondsSinceLastOnline % 3600) / 60);
+    const s = secondsSinceLastOnline % 60;
 
-    const parts = [];
-    
-    if (days > 0) {
-      parts.push(`${days}d`);
-    }
-    if (hours > 0 || days > 0) {
-      parts.push(`${hours.toString().padStart(2, '0')}h`);
-    }
-    if (minutes > 0 || hours > 0 || days > 0) {
-      parts.push(`${minutes.toString().padStart(2, '0')}m`);
-    }
-    parts.push(`${seconds.toString().padStart(2, '0')}s`);
-
-    return parts.join(' ');
+    return `${d > 0 ? d + 'd ' : ''}${h.toString().padStart(2, '0')}h ${m.toString().padStart(2, '0')}m ${s.toString().padStart(2, '0')}s`;
   };
 
   return { secondsSinceLastOnline, formatDuration };

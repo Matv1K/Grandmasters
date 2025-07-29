@@ -20,8 +20,8 @@
 .profileCard {
   background: var(--bg-card);
   backdrop-filter: blur(20px);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-xl);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-lg);
 }
@@ -33,9 +33,9 @@
   height: 150px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid var(--border-accent);
-  box-shadow: var(--shadow-md);
-  transition: all var(--transition-normal);
+  border: 4px solid var(--border-hover);
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
 }
 
 .avatar:hover {
@@ -53,15 +53,15 @@
 
 .infoGrid {
   display: grid;
-  gap: var(--spacing-md);
+  gap: var(--spacing-lg);
 }
 
 .infoItem {
   background: var(--bg-secondary);
-  border: 1px solid var(--border-primary);
-  border-radius: var(--radius-md);
-  padding: var(--spacing-md);
-  transition: all var(--transition-normal);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--spacing-lg);
+  transition: all var(--transition);
 }
 
 .infoItem:hover {
@@ -74,7 +74,7 @@
   color: var(--text-accent);
   font-weight: 600;
   display: block;
-  margin-bottom: var(--spacing-xs);
+  margin-bottom: 0.5rem;
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -113,26 +113,25 @@
   background: var(--text-error);
   color: var(--text-primary);
   border: none;
-  padding: var(--spacing-sm) var(--spacing-lg);
-  border-radius: var(--radius-sm);
+  padding: var(--spacing) var(--spacing-lg);
+  border-radius: var(--radius);
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  transition: all var(--transition-normal);
-  margin-top: var(--spacing-sm);
-  box-shadow: var(--shadow-sm);
+  transition: all var(--transition);
+  margin-top: var(--spacing);
+  box-shadow: var(--shadow);
 }
 
 .retryButton:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
+  box-shadow: var(--shadow-lg);
   background: #dc2626;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
   .container {
-    padding: var(--spacing-sm);
+    padding: var(--spacing);
   }
   
   .title {
@@ -154,6 +153,6 @@
   }
   
   .infoItem {
-    padding: var(--spacing-sm);
+    padding: var(--spacing);
   }
-} 
+}
