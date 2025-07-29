@@ -24,4 +24,29 @@
   border-radius: 50%;
   object-fit: cover;
   box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+}
+.loading {
+  text-align: center;
+  color: #888;
+}
+.errorContainer {
+  text-align: center;
+  padding: 40px 20px;
+}
+.error {
+  color: #c00;
+  margin-bottom: 16px;
+}
+.retryButton {
+  background: #0074cc;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+.retryButton:hover {
+  background: #005a9e;
 } 

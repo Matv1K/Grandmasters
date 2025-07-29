@@ -1,58 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
 import styles from "./style.module.css";
+import { usePlayerProfile } from "../../hooks/usePlayerProfile";
+import { useActivityTimer } from "../../hooks/useActivityTimer";
 
 function GrandmasterProfile() {
   const { username } = useParams();
-
-  const [player, setPlayer] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [secondsSinceLastOnline, setSecondsSinceLastOnline] = useState(null);
-
-  useEffect(() => {
-    setLoading(true);
-    setError(null);
-
-    fetch(`https://api.chess.com/pub/player/${username}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch player info");
-        return res.json();
-      })
-      .then((data) => {
-        setPlayer(data);
-        setLoading(false);
-        if (data.last_online) {
-          setSecondsSinceLastOnline(Math.floor(Date.now() / 1000) - data.last_online);
-        }
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [username]);
-
-  useEffect(() => {
-    if (!player || !player.last_online) return;
-    const interval = setInterval(() => {
-      setSecondsSinceLastOnline(Math.floor(Date.now() / 1000) - player.last_online);
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [player]);
-
-  function formatDuration(seconds) {
-    if (seconds == null) return "-";
-    const d = Math.floor(seconds / (3600 * 24));
-    const h = Math.floor((seconds % (3600 * 24)) / 3600);
-    const m = Math.floor((seconds % 3600) / 60);
-    const s = seconds % 60;
-    return [
-      d > 0 ? `${d}d` : null,
-      h > 0 ? `${h}h` : null,
-      m > 0 ? `${m}m` : null,
-      `${s}s`
-    ].filter(Boolean).join(" ");
-  }
+  const { player, loading, error } = usePlayerProfile(username);
+  const { formatDuration } = useActivityTimer(player?.last_online);
 
   if (loading) return <div className={styles.loading}>Loading player info...</div>;
   if (error) return <div className={styles.error}>Error: {error}</div>;
@@ -74,7 +29,7 @@ function GrandmasterProfile() {
       )}
       {player.status && <p><b>Status:</b> {player.status}</p>}
       {player.last_online && (
-        <p><b>Last activity:</b> {formatDuration(secondsSinceLastOnline)} ago</p>
+        <p><b>Last activity:</b> {formatDuration()} ago</p>
       )}
     </div>
   );

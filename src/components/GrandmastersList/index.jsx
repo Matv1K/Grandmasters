@@ -1,29 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./style.module.css";
 import { useNavigate } from "react-router-dom";
+import { useGrandmasters } from "../../hooks/useGrandmasters";
 
 function GrandmastersList() {
-  const [gms, setGms] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
+  const { gms, loading, error } = useGrandmasters();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    fetch("https://api.chess.com/pub/titled/GM")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch GMs");
-        return res.json();
-      })
-      .then((data) => {
-        setGms(data.players || []);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, []);
 
   if (loading) return <div className={styles.loading}>Loading grandmasters...</div>;
   if (error) return <div className={styles.error}>Error: {error}</div>;
